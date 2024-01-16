@@ -216,20 +216,18 @@ export const tokenConfig = (getState) => {
     // looking at auth reducer and getting that token 
     const token = getState().auth.token;
 
-    var csrftoken = Cookies.get('XSRF-TOKEN'); // Use the correct cookie name
+    var csrftoken = Cookies.get('csrftoken'); // Use the correct cookie name
 
     // headers
     const config = {
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken':csrftoken,
+            'Authorization': `Token ${token}`
         }
     }
 
-    // if token, add to headers config
-    if (token) {
-        config.headers['Authorization'] = `Token ${token}`;
-    }
+    console.log(config)
     // return config with token
     return config;
 }
@@ -262,9 +260,7 @@ export const fileTokenConfig = (getState) => {
 
 export const getPublicUserData = (username) => async (dispatch,getState) =>{
     try {
-        const res = await axios.post('/api/user/get_user/', { username: username }, fileTokenConfig(getState));
-        console.log('here');
-        console.log(res.data);
+        const res = await axios.post('/api/user/get_user/', { username: username },tokenConfig(getState));
         return res.data;
       } catch (err) {
         console.error(err);

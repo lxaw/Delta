@@ -60,6 +60,7 @@ const PublicProfile = (props) => {
           console.error("User data is undefined.");
         }
       } catch (error) {
+        console.log('public profile')
         console.error(error);
       }
     };

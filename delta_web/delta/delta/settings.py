@@ -81,7 +81,13 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES':('knox.auth.TokenAuthentication',)
+    # 'DEFAULT_AUTHENTICATION_CLASSES':('knox.auth.TokenAuthentication',)
+       'DEFAULT_AUTHENTICATION_CLASSES': (
+       'rest_framework.authentication.TokenAuthentication',
+   ),
+   'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser'
+   ),
 }
 
 MIDDLEWARE = [
@@ -186,4 +192,5 @@ REST_FRAMEWORK = {
     ],
 }
 
-CSRF_COOKIE_NAME = "XSRF-TOKEN"
+CSRF_COOKIE_NAME = 'csrftoken'  # This is the default nameCSRF_COOKIE_NAME = 'XSRF-TOKEN'
+CSRF_HEADER_NAME = 'X-CSRFToken'

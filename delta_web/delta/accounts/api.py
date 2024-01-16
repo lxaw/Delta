@@ -305,7 +305,7 @@ class UserAPI(generics.RetrieveAPIView):
 # For instance, this is shown on the public profile page of users.
 class ViewsetPublicUser(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated,
+        # permissions.IsAuthenticated,
     ]
     serializer_class = PublicUserSerializer
 

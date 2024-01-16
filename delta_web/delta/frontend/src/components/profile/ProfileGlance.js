@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import OrganizationCard from '../community/OrganizationCard';
 import DataSetTable from '../data_transfer/DataSetTable';
+import { getCsvFiles } from '../../actions/file';
 
 <script src="https://kit.fontawesome.com/f45b95bc62.js" crossorigin="anonymous"></script>
 
@@ -29,11 +30,22 @@ const ProfileGlance = (props) => {
     const { isAuthenticated, user } = props.auth; //Making sure that its the specific user thats information is displayed
     const [csvFiles, setCsvFiles] = useState(null);
 
+    const fetchData = async() =>{
+        try{
+            const csvFiles = await props.getCsvFiles();
+            if(csvFiles){
+                setCsvFiles(csvFiles)
+            }else{
+                console.log('no csv files')
+            }
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
-        axios.get('/api/csv/', { headers: { 'Content-Type': 'application/json', 'Authorization': `Token ${props.auth.token}` } })
-            .then(res => {
-                setCsvFiles(res.data);
-            })
+        fetchData()
     }, [])
 
     if (csvFiles == null) return <div data-testid="profile_glance-1"></div>;
@@ -114,4 +126,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps)(ProfileGlance);
+export default connect(mapStateToProps,{getCsvFiles})(ProfileGlance);

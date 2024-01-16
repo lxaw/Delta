@@ -27,9 +27,15 @@ export const getCsvFiles = () => (dispatch,getState) =>{
             console.log(res);
             return res;
         })
-        .catch(err=>dispatch(
-            returnErrors(err.response.data,err.response.status)
-        ))
+        .catch((err)=>{
+            console.log('error')
+            console.log(err)
+
+            dispatch(
+                returnErrors(err.response.data,err.response.status))
+            }
+            
+        )
 }
 // GET FILE by ID
 export const getCsvFile = (id) => (dispatch,getState) =>{
