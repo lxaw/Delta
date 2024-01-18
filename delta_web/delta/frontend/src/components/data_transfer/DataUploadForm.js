@@ -5,11 +5,6 @@ Delta project
 
 Authors:
 Lexington Whalen (@lxaw)
-Carter Marlowe (@Cmarlowe132)
-Vince Kolb-LugoVince (@vancevince) 
-Blake Seekings (@j-blake-s)
-Naveen Chithan (@nchithan)
-
 File name:  DataUploadForm.js
 
 Brief description: 
@@ -175,15 +170,14 @@ const DataUploadForm = (props) =>{
 
       // Use the dictionary to create a csvFile object and upload it. 
       props.addCsvFile(dictData)
-        .then((res)=>{
-            // good response
-            console.log('here we are!')
-            console.log(res)
-            if(res.status == 200){
-              navigate('/data/download');
-            }
-          }
-        );
+        // .then((res) => {
+        //     // Handle the response here
+        //     console.log(res);
+        // })
+        // .catch((err) => {
+        //     // Handle errors
+        //     console.error(err);
+        // });
   }
 
   const updateTags = (tags) =>{

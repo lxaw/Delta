@@ -20,20 +20,21 @@ import {
     USER_UPDATE_FAIL,
 } from './types';
 
-// export const getCookie = (name) => {
-//     var cookieValue = null;
-//     if (document.cookie && document.cookie !== '') {
-//         var cookies = document.cookie.split(';');
-//         for (var i = 0; i < cookies.length; i++) {
-//             var cookie = jQuery.trim(cookies[i]);
-//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
-//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//                 break;
-//             }
-//         }
-//     }
-//     return cookieValue;
-// }
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 
 // CHECK TOKEN & LOAD USER
@@ -216,7 +217,7 @@ export const tokenConfig = (getState) => {
     // looking at auth reducer and getting that token 
     const token = getState().auth.token;
 
-    var csrftoken = Cookies.get('csrftoken'); // Use the correct cookie name
+    var csrftoken = Cookies.get('XSRF-TOKEN'); // Use the correct cookie name
 
     // headers
     const config = {
@@ -227,7 +228,6 @@ export const tokenConfig = (getState) => {
         }
     }
 
-    console.log(config)
     // return config with token
     return config;
 }
@@ -239,7 +239,7 @@ export const fileTokenConfig = (getState) => {
     // looking at auth reducer and getting that token 
     const token = getState().auth.token;
 
-    var csrftoken = Cookies.get('XSRF-TOKEN'); // Use the correct cookie name
+    var csrftoken = getCookie('XSRF-TOKEN'); // Use the correct cookie name
 
     // headers
     const config = {
@@ -247,13 +247,10 @@ export const fileTokenConfig = (getState) => {
             'Accept':'application/json',
             'Content-Type': 'multipart/form-data',
             'X-CSRFToken':csrftoken,
+            'Authorization': `Token ${token}`
         }
     }
 
-    // if token, add to headers config
-    if (token) {
-        config.headers['Authorization'] = `Token ${token}`;
-    }
     // return config with token
     return config;
 }

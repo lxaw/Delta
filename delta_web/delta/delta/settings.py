@@ -192,5 +192,4 @@ REST_FRAMEWORK = {
     ],
 }
 
-CSRF_COOKIE_NAME = 'csrftoken'  # This is the default nameCSRF_COOKIE_NAME = 'XSRF-TOKEN'
-CSRF_HEADER_NAME = 'X-CSRFToken'
+CSRF_COOKIE_NAME = "XSRF-TOKEN"

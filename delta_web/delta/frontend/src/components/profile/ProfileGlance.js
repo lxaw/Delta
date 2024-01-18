@@ -28,13 +28,15 @@ import { getCsvFiles } from '../../actions/file';
 const ProfileGlance = (props) => {
     //This is the rendering for the profile at a glance page.
     const { isAuthenticated, user } = props.auth; //Making sure that its the specific user thats information is displayed
-    const [csvFiles, setCsvFiles] = useState(null);
+    const [csvFiles, setCsvFiles] = useState([]);
 
     const fetchData = async() =>{
         try{
             const csvFiles = await props.getCsvFiles();
             if(csvFiles){
+                console.log('setting csvs')
                 setCsvFiles(csvFiles)
+                console.log(csvFiles)
             }else{
                 console.log('no csv files')
             }
@@ -48,7 +50,7 @@ const ProfileGlance = (props) => {
         fetchData()
     }, [])
 
-    if (csvFiles == null) return <div data-testid="profile_glance-1"></div>;
+    if (csvFiles == null)return <div data-testid="profile_glance-1"></div>;
 
     if (user.followed_organizations == null) return <div data-testid="profile_glance-1"></div>;
     return (

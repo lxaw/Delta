@@ -6,12 +6,12 @@ import {fileTokenConfig,tokenConfig} from './auth';
 import {ADD_CSV_FILE, DELETE_CSV_FILE, GET_CSV_FILES,GET_CSV_FILE, 
     CSV_FILE_UPDATE_SUCCESS,GET_CSV_FILES_PUBLIC} from "./types";
 
+
 // POST FILE 
 export const addCsvFile = (dictData) => (dispatch,getState) =>{
-    console.log(dictData)
-
-    return axios.post('/api/csv/',dictData,fileTokenConfig(getState))
+    axios.post('/api/csv/',dictData,fileTokenConfig(getState))
     .then((res)=>{
+        console.log(res)
         dispatch(createMessage({addCsvFileSuccess:"File Posted"}))
         dispatch({type:ADD_CSV_FILE,payload:res.data});
         return res;
@@ -24,7 +24,6 @@ export const addCsvFile = (dictData) => (dispatch,getState) =>{
 export const getCsvFiles = () => (dispatch,getState) =>{
     axios.get('/api/csv/',tokenConfig(getState))
         .then(res => {
-            console.log(res);
             return res;
         })
         .catch((err)=>{
@@ -109,7 +108,9 @@ export const getCsvFilesPublic = () => (dispatch,getState) =>{
 // these should all be zips
 export const downloadCsvFile = (id) => (dispatch, getState) =>{
     var config = tokenConfig(getState)
-    config['responseType'] = "arraybuffer"
+    console.log('downloading')
+    config['responseType'] = "arraybuffer";
+
     axios.get(`/api/public_csvs/${id}/download`,config)
     .then(res=>{
         console.log(res)
@@ -124,5 +125,6 @@ export const downloadCsvFile = (id) => (dispatch, getState) =>{
         link.click();
     })
     .catch(err=>{
+        console.log(err)
     })
 }

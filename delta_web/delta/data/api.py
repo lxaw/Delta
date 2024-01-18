@@ -57,7 +57,7 @@ class ViewsetPublicDataSet(viewsets.ModelViewSet):
     queryset = DataSet.objects.all()
 
     permission_classes = [
-        # permissions.IsAuthenticated
+        permissions.IsAuthenticated
     ]
 
     serializer_class = SerializerDataSet
@@ -164,8 +164,7 @@ class ViewsetDataSet(viewsets.ModelViewSet):
 
         # now delete the files you just zipped
         shutil.rmtree(strDataSetPath)
-
-
+        print('done!')
 
         # need an id for dataset prior to set
 
