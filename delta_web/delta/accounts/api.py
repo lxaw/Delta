@@ -35,7 +35,7 @@ from email_validator import validate_email, EmailNotValidError
 from django.contrib.auth import get_user_model
 
 # Profiles
-from .models import Profile
+from .models import Profile,Cart
 
 # Notifications
 from social.models import (NotificationNews,NotificationWhatsHot)
@@ -63,6 +63,11 @@ class RegisterAPI(generics.GenericAPIView):
         # the profile stores the bio of the user.
         user.profile = Profile(user=user)
         user.profile.save()
+
+        # user needs to have a cart
+        # for downloading datasets
+        user.cart = Cart(user=user)
+        user.cart.save()
 
         # grab the organization key 
         organization_key = request.data.get("organization_key")

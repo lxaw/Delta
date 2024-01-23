@@ -25,6 +25,8 @@ from django.dispatch import receiver
 # TODO: Change to our custom user model.
 from django.contrib.auth import get_user_model
 
+from accounts.models import Cart
+
 # for file manip
 import os
 
@@ -55,9 +57,14 @@ class DataSet(models.Model):
     registered_organizations = models.ManyToManyField(Organization,blank=True,related_name="uploaded_datasets")
 
     name = models.CharField(max_length=128)
+    # original name of the dataset
     original_name = models.CharField(max_length=128)
 
+    # number of files in the dataset
     num_files = models.IntegerField(default=0)
+
+    # the carts that the data set is in
+    carts = models.ManyToManyField(Cart)
 
     def __str__(self):
         return self.name
